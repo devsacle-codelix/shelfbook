@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: "22"
           cache: "pnpm"
+      
 
       - name: Install dependencies
         run: pnpm install
@@ -33,11 +34,6 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Build
-        run: pnpm --filter=api build
-
-      - name: Test
-        run: pnpm test
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

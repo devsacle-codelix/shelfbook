@@ -2,6 +2,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { Toaster } from "react-hot-toast";
 import appCss from "../styles.css?url";
 import "@shelfbook/ui/globals.css";
 
@@ -38,6 +39,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
+				<Toaster />
 				<QueryClientProvider client={queryClient}>
 					{children}
 				</QueryClientProvider>
