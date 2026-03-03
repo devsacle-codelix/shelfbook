@@ -14,3 +14,13 @@ model User {
   maxUnreadBook Int      @default(4)
   createdAt     DateTime @default(now())
 }
+
+model Book {
+  id            String   @id @default(uuid())
+  title         String
+  author_name   String
+  total_pages   Int
+  price         Float
+  image         String
+  createdAt     DateTime @default(now())
+}

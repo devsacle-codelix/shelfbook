@@ -4,6 +4,7 @@ import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 import { auth } from "./modules/auth/routes";
+import { book } from "./modules/book/routes";
 
 const app = new Hono()
 
@@ -21,7 +22,8 @@ const app = new Hono()
 		console.error(err);
 		return c.json({ error: err.message || "Internal Server Error" }, 500);
 	})
-	.route("/auth", auth);
+	.route("/auth", auth)
+	.route("/books", book);
 
 console.log("ENV", process.env.TEST);
 
