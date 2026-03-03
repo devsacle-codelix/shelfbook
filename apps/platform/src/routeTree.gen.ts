@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StoreAdminRouteImport } from './routes/storeAdmin'
 import { Route as StoreRouteImport } from './routes/store'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as IndexRouteImport } from './routes/index'
 
+const StoreAdminRoute = StoreAdminRouteImport.update({
+  id: '/storeAdmin',
+  path: '/storeAdmin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoreRoute = StoreRouteImport.update({
   id: '/store',
   path: '/store',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/store': typeof StoreRoute
+  '/storeAdmin': typeof StoreAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/store': typeof StoreRoute
+  '/storeAdmin': typeof StoreAdminRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/register': typeof RegisterRoute
   '/store': typeof StoreRoute
+  '/storeAdmin': typeof StoreAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register' | '/store'
+  fullPaths: '/' | '/register' | '/store' | '/storeAdmin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register' | '/store'
-  id: '__root__' | '/' | '/register' | '/store'
+  to: '/' | '/register' | '/store' | '/storeAdmin'
+  id: '__root__' | '/' | '/register' | '/store' | '/storeAdmin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RegisterRoute: typeof RegisterRoute
   StoreRoute: typeof StoreRoute
+  StoreAdminRoute: typeof StoreAdminRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/storeAdmin': {
+      id: '/storeAdmin'
+      path: '/storeAdmin'
+      fullPath: '/storeAdmin'
+      preLoaderRoute: typeof StoreAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/store': {
       id: '/store'
       path: '/store'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RegisterRoute: RegisterRoute,
   StoreRoute: StoreRoute,
+  StoreAdminRoute: StoreAdminRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,6 +1,8 @@
 import { Button } from "@shelfbook/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useGetBooks } from "../modules/books/hooks/useAddBooks";
+import type { BookListType } from "../routes/storeAdmin";
 
 export const Route = createFileRoute("/store")({
 	component: RouteComponent,
@@ -15,62 +17,7 @@ function RouteComponent() {
 		setCartIds([...cartIds, id]);
 	};
 
-	const jsonBooks = [
-		{
-			id: 1,
-			title: "The Great Gatsby",
-			description:
-				"A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.",
-			price: 10.99,
-			image:
-				"https://images-platform.99static.com//D7F5UkIK5fOIhNvxekofVWCD2P8=/0x843:1129x1972/fit-in/500x500/99designs-contests-attachments/87/87426/attachment_87426123",
-		},
-		{
-			id: 2,
-			title: "The Great Gatsby",
-			description:
-				"A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.",
-			price: 10.99,
-			image:
-				"https://images-platform.99static.com//D7F5UkIK5fOIhNvxekofVWCD2P8=/0x843:1129x1972/fit-in/500x500/99designs-contests-attachments/87/87426/attachment_87426123",
-		},
-		{
-			id: 3,
-			title: "The Great Gatsby",
-			description:
-				"A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.",
-			price: 10.99,
-			image:
-				"https://images-platform.99static.com//D7F5UkIK5fOIhNvxekofVWCD2P8=/0x843:1129x1972/fit-in/500x500/99designs-contests-attachments/87/87426/attachment_87426123",
-		},
-		{
-			id: 4,
-			title: "The Great Gatsby",
-			description:
-				"A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.",
-			price: 10.99,
-			image:
-				"https://images-platform.99static.com//D7F5UkIK5fOIhNvxekofVWCD2P8=/0x843:1129x1972/fit-in/500x500/99designs-contests-attachments/87/87426/attachment_87426123",
-		},
-		{
-			id: 5,
-			title: "The Great Gatsby",
-			description:
-				"A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.",
-			price: 10.99,
-			image:
-				"https://images-platform.99static.com//D7F5UkIK5fOIhNvxekofVWCD2P8=/0x843:1129x1972/fit-in/500x500/99designs-contests-attachments/87/87426/attachment_87426123",
-		},
-		{
-			id: 6,
-			title: "The Great Gatsby",
-			description:
-				"A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.",
-			price: 10.99,
-			image:
-				"https://images-platform.99static.com//D7F5UkIK5fOIhNvxekofVWCD2P8=/0x843:1129x1972/fit-in/500x500/99designs-contests-attachments/87/87426/attachment_87426123",
-		},
-	];
+	const bookQuery = useGetBooks();
 
 	return (
 		<div className="container mx-auto">
@@ -83,12 +30,12 @@ function RouteComponent() {
 						type="button"
 						disabled={false}
 						label={`Cart ${cartCount}`}
-						onClick={() => {}}
+						onClick={() => null}
 					/>
 				</div>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20">
-				{jsonBooks.map((book) => (
+				{bookQuery?.data?.map((book: BookListType) => (
 					<div key={book.id} className="border border-zinc-200 rounded-lg p-4">
 						<div className="w-full h-48 bg-zinc-200 rounded-lg">
 							<img
