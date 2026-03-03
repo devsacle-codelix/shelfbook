@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as StoreAdminRouteImport } from './routes/storeAdmin'
 import { Route as StoreRouteImport } from './routes/store'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as IndexRouteImport } from './routes/index'
 
 const StoreAdminRoute = StoreAdminRouteImport.update({
@@ -29,6 +30,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/store': typeof StoreRoute
   '/storeAdmin': typeof StoreAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/store': typeof StoreRoute
   '/storeAdmin': typeof StoreAdminRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/store': typeof StoreRoute
   '/storeAdmin': typeof StoreAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register' | '/store' | '/storeAdmin'
+  fullPaths: '/' | '/profile' | '/register' | '/store' | '/storeAdmin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register' | '/store' | '/storeAdmin'
-  id: '__root__' | '/' | '/register' | '/store' | '/storeAdmin'
+  to: '/' | '/profile' | '/register' | '/store' | '/storeAdmin'
+  id: '__root__' | '/' | '/profile' | '/register' | '/store' | '/storeAdmin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   StoreRoute: typeof StoreRoute
   StoreAdminRoute: typeof StoreAdminRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   StoreRoute: StoreRoute,
   StoreAdminRoute: StoreAdminRoute,
