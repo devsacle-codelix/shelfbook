@@ -5,6 +5,7 @@ import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 import { auth } from "./modules/auth/routes";
 import { book } from "./modules/book/routes";
+import { userOnBook } from "./modules/user-book/routes";
 
 const app = new Hono()
 
@@ -23,7 +24,8 @@ const app = new Hono()
 		return c.json({ error: err.message || "Internal Server Error" }, 500);
 	})
 	.route("/auth", auth)
-	.route("/books", book);
+	.route("/books", book)
+	.route("/userbooks", userOnBook);
 
 console.log("ENV", process.env.TEST);
 

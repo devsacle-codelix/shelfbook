@@ -13,14 +13,25 @@ model User {
   password      String
   maxUnreadBook Int      @default(4)
   createdAt     DateTime @default(now())
+  books         UsersOnBooks[]
 }
 
 model Book {
   id            String   @id @default(uuid())
   title         String
   author_name   String
+  current_page  Int
   total_pages   Int
   price         Float
   image         String
   createdAt     DateTime @default(now())
+  users         UsersOnBooks[]
+}
+
+model UsersOnBooks {
+  book          Book @relation(fields: [bookId], references: [id])
+  bookId        String
+  user          User @relation(fields: [userId], references: [id])
+  userId        String
+  @@id([userId, bookId])
 }

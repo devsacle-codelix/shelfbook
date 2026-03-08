@@ -5,6 +5,7 @@ import { queryClient } from "@/routes/__root";
 interface AddBooksProps {
 	title: string;
 	author_name: string;
+	current_page: number;
 	total_pages: number;
 	price: number;
 	image: string;
@@ -15,6 +16,7 @@ export const useAddBooks = () => {
 		mutationFn: async ({
 			title,
 			author_name,
+			current_page,
 			total_pages,
 			price,
 			image,
@@ -24,7 +26,14 @@ export const useAddBooks = () => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ title, author_name, total_pages, price, image }),
+				body: JSON.stringify({
+					title,
+					author_name,
+					current_page,
+					total_pages,
+					price,
+					image,
+				}),
 			});
 			const data = await res.json();
 			if (!res.ok) {
