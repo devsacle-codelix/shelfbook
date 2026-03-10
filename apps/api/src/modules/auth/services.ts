@@ -1,6 +1,10 @@
 import bcrypt from "bcrypt";
+// import { generateToken } from "./jwt";
+import jwt from "jsonwebtoken";
 import { prisma } from "../../utils/prisma";
 import type { LoginInput, RegisterInput } from "./schema";
+
+const SECRET_KEY = process.env.JWT_SECRET!;
 
 export async function register(data: RegisterInput) {
 	const existingUser = await prisma.user.findUnique({
@@ -31,16 +35,32 @@ export async function login(data: LoginInput) {
 	if (!passwordMatch) {
 		throw new Error("Invalid email or password");
 	}
-
+	console.log("USER.ID:", user.id);
+	// const token =  generateToken(user.id);
+	const token = jwt.sign(
+		{
+			userId: user.id,
+			email: user.email,
+		},
+		SECRET_KEY,
+		{ expiresIn: "24h" }, // Token expire dalam 24 jam
+	);
+	console.log("TOKEN", token);
 	return {
-		id: user.id,
-		email: user.email,
-		createdAt: user.createdAt,
+		token,
+		user: {
+			id: user.id,
+			email: user.email,
+			createdAt: user.createdAt,
+		},
 	};
 }
 
-export async function profile() {
-	return prisma.user.findFirst({
+export async function profile(userId: string) {
+	return prisma.user.findUnique({
+		where: {
+			id: userId,
+		},
 		select: {
 			id: true,
 			email: true,
