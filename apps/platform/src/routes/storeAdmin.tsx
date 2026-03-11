@@ -11,6 +11,7 @@ export type BookListType = {
 	id: number;
 	title: string;
 	author_name: string;
+	current_page: number;
 	total_pages: number;
 	price: number;
 	image: string;
@@ -21,6 +22,7 @@ function RouteComponent() {
 	const [bookProps, setBookProps] = useState({
 		title: "",
 		author_name: "",
+		current_page: 0,
 		total_pages: 0,
 		price: 0,
 		image: "",
